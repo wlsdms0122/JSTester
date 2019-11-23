@@ -6,10 +6,14 @@
 //  Copyright © 2019 JSilver. All rights reserved.
 //
 
-class Tester<Input, Output: Equatable> {
+open class Tester<Input, Output: Equatable> {
     // MARK: - properties
-    var inputs: [Input] = []
-    var outputs: [Output] = []
+    public var inputs: [Input] = []
+    public var outputs: [Output] = []
+    
+    public init() {
+        
+    }
     
     // MARK: - private method
     private func success(case: Int) {
@@ -43,7 +47,7 @@ class Tester<Input, Output: Equatable> {
     }
     
     // MARK: - public method
-    func execute() {
+    public func execute() {
         guard inputs.count == outputs.count else {
             print("Can't execute test cases. Because injected inputs & outputs aren't matched.")
             return
@@ -67,7 +71,7 @@ class Tester<Input, Output: Equatable> {
         result(success: count, total: inputs.count)
     }
     
-    func solve(_ input: Input) -> Output {
+    open func solve(_ input: Input) -> Output {
         fatalError("Can't solve problem by default. Inheritance required.")
     }
 }
