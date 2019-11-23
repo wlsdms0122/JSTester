@@ -1,6 +1,9 @@
 # JSTester
+![SPM](https://img.shields.io/badge/SPM-supported-red)
+![platform](https://img.shields.io/badge/platform-mac%2010.15-green)
 
 A algorithm problem test helper.
+
 
 # Getting Started
 This package has only 1 class named `Tster` right this.
