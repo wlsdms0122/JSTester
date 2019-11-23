@@ -47,19 +47,25 @@ open class Tester<Input, Output: Equatable> {
     }
     
     // MARK: - public method
-    public func execute() {
+    @discardableResult
+    public func execute() -> [Bool] {
         guard inputs.count == outputs.count else {
             print("Can't execute test cases. Because injected inputs & outputs aren't matched.")
-            return
+            return []
         }
         
+        var results: [Bool] = []
         let count = inputs.map { solve($0) }
             .enumerated()
             .reduce(0) {
                 // Get answer
                 let answer = outputs[$1.offset]
+                // Compare result
+                let result = $1.element == answer
+                results.append(result)
+                
                 // Print resut log
-                if $1.element == answer {
+                if result {
                     success(case: $1.offset + 1)
                     return $0 + 1
                 } else {
@@ -69,6 +75,7 @@ open class Tester<Input, Output: Equatable> {
             }
         
         result(success: count, total: inputs.count)
+        return results
     }
     
     open func solve(_ input: Input) -> Output {
