@@ -11,17 +11,19 @@ open class Tester<Input, Output: Equatable> {
     public var inputs: [Input] = []
     public var outputs: [Output] = []
     
+    private(set) var testcase: Int = 0
+    
     public init() {
         
     }
     
     // MARK: - private method
     private func success(case: Int) {
-        print(" 💚 Teatcase #\(`case`) was succeed.")
+        print(" 💚 Testcase #\(`case`) was succeed.")
     }
     
     private func fail(case: Int, executed: Output, expected: Output) {
-        print(" ❤️ Teatcase #\(`case`) was failed.")
+        print(" ❤️ Testcase #\(`case`) was failed.")
         print("    Your execution is \(executed), but we expected \(expected)")
     }
     
@@ -55,21 +57,24 @@ open class Tester<Input, Output: Equatable> {
         }
         
         var results: [Bool] = []
-        let count = inputs.map { solve($0) }
-            .enumerated()
+        let count = inputs.enumerated()
+            .map { input -> (testcase: Int, output: Output) in
+                testcase = input.offset
+                return (input.offset, solve(input.element))
+            }
             .reduce(0) {
                 // Get answer
-                let answer = outputs[$1.offset]
+                let answer = outputs[$1.testcase]
                 // Compare result
-                let result = $1.element == answer
+                let result = $1.output == answer
                 results.append(result)
                 
-                // Print resut log
+                // Print result log
                 if result {
-                    success(case: $1.offset + 1)
+                    success(case: $1.testcase + 1)
                     return $0 + 1
                 } else {
-                    fail(case: $1.offset + 1, executed: $1.element, expected: answer)
+                    fail(case: $1.testcase + 1, executed: $1.output, expected: answer)
                     return $0
                 }
             }
