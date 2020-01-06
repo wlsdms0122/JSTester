@@ -6,13 +6,16 @@ A algorithm problem test helper.
 
 
 # Getting Started
-This package has only 1 class named `Tster` right this.
+This package has only 1 class named `Tester` right this.
 
 ```swift
 class Tester<Input, Output: Equatable> {
     // It is property you must inject information to test.
     var inputs: [Input] = []
     var outputs: [Output] = []
+    
+    // Use this property for debug of specific testcase. Set breakpoint or any condition. 
+    var testcase: Int = 0
     
     // It is simple functions about solve the problem.
     func execute()
